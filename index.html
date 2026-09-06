@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de precios — Salyn Store</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3B1F2B">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Precios Salyn">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F4;
+    --ink:#301A24;
+    --plum:#3B1F2B;
+    --rose:#B76E79;
+    --rose-light:#EBD3D6;
+    --gold:#9C8752;
+    --paper:#FFFFFF;
+    --line:#E4D9D4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    padding:28px 18px 60px;
+  }
+  .wrap{max-width:440px;margin:0 auto;}
+
+  header{margin-bottom:28px;}
+  .eyebrow{
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    color:var(--rose);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:30px;
+    line-height:1.15;
+    margin:0 0 8px;
+    color:var(--plum);
+  }
+  p.sub{
+    font-size:14.5px;
+    color:#6B5560;
+    margin:0;
+    line-height:1.5;
+  }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 20px;
+    margin-bottom:18px;
+  }
+
+  label{
+    display:block;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--plum);
+    margin-bottom:6px;
+  }
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  .input-row{
+    position:relative;
+    display:flex;
+    align-items:center;
+  }
+  .input-row span.prefix{
+    position:absolute;
+    left:14px;
+    font-size:15px;
+    color:#8A7A83;
+    font-weight:500;
+  }
+  input[type=number]{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:17px;
+    padding:12px 14px 12px 38px;
+    border-radius:9px;
+    border:1.5px solid var(--line);
+    background:#FDFBFA;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease;
+    -moz-appearance:textfield;
+  }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance:none;margin:0;
+  }
+  input[type=number]:focus{
+    border-color:var(--rose);
+  }
+  .input-row.pct span.prefix{left:auto;right:14px;}
+  .input-row.pct input{padding:12px 34px 12px 14px;}
+
+  .hint{
+    font-size:12.5px;
+    color:#8A7A83;
+    margin-top:5px;
+  }
+
+  .section-label{
+    font-family:'Fraunces', serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--plum);
+    margin:0 0 14px;
+  }
+
+  /* Ticket-style result */
+  .ticket{
+    position:relative;
+    background:var(--plum);
+    color:#FBF3F0;
+    border-radius:14px;
+    padding:20px 20px 22px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .ticket::before, .ticket::after{
+    content:'';
+    position:absolute;
+    width:22px;height:22px;
+    background:var(--bg);
+    border-radius:50%;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .ticket::before{left:-11px;}
+  .ticket::after{right:-11px;}
+  .ticket .method{
+    font-size:12.5px;
+    color:var(--rose-light);
+    font-weight:500;
+    margin-bottom:4px;
+  }
+  .ticket .price{
+    font-family:'Fraunces', serif;
+    font-size:34px;
+    font-weight:700;
+    line-height:1.1;
+    margin-bottom:4px;
+  }
+  .ticket .sugerido{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    background:rgba(251,243,240,0.1);
+    border-radius:8px;
+    padding:9px 12px;
+    margin-bottom:12px;
+    font-size:12.5px;
+    color:var(--rose-light);
+  }
+  .ticket .sugerido strong{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:600;
+    color:#FBF3F0;
+  }
+  .ticket .breakdown{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    padding-top:10px;
+    border-top:1px dashed rgba(251,243,240,0.28);
+  }
+  .ticket .breakdown div{color:rgba(251,243,240,0.65);}
+  .ticket .breakdown strong{
+    display:block;
+    color:#FBF3F0;
+    font-size:14px;
+    font-weight:600;
+    margin-top:2px;
+  }
+  .ticket.disabled .price{
+    font-size:20px;
+    color:var(--rose-light);
+  }
+
+  .note{
+    font-size:12.5px;
+    color:#8A7A83;
+    line-height:1.5;
+    margin-top:2px;
+  }
+
+  .costo-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding-top:14px;
+    margin-top:4px;
+    border-top:1px solid var(--line);
+  }
+  .costo-total span:first-child{font-size:13.5px;color:#6B5560;}
+  .costo-total span:last-child{font-family:'Fraunces', serif;font-size:19px;font-weight:600;color:var(--plum);}
+
+  .presets{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+  .preset-btn{
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--plum);
+    background:var(--rose-light);
+    border:1.5px solid transparent;
+    border-radius:20px;
+    padding:7px 15px;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .preset-btn:hover{
+    border-color:var(--rose);
+  }
+  .preset-btn.active{
+    background:var(--plum);
+    color:#FBF3F0;
+  }
+
+  /* Comparador de escenarios */
+  .scenarios{
+    display:flex;
+    gap:8px;
+  }
+  .scenario-card{
+    flex:1;
+    background:#FDFBFA;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:14px 10px;
+    text-align:center;
+  }
+  .scenario-card.destacado{
+    border-color:var(--rose);
+    background:var(--rose-light);
+  }
+  .scenario-card .etiqueta{
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--rose);
+    margin-bottom:2px;
+  }
+  .scenario-card .pct-val{
+    font-size:12px;
+    color:#8A7A83;
+    margin-bottom:8px;
+  }
+  .scenario-card .precio-val{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:700;
+    color:var(--plum);
+    line-height:1.1;
+    margin-bottom:4px;
+  }
+  .scenario-card .ganancia-val{
+    font-size:11.5px;
+    color:#8A7A83;
+  }
+
+  /* Precio de la competencia */
+  .compare-result{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#FDFBFA;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:14px;
+    margin-top:14px;
+  }
+  .compare-result .badge{
+    flex-shrink:0;
+    width:40px;height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    font-weight:700;
+    color:#fff;
+  }
+  .compare-result .badge.arriba{background:#B5573B;}
+  .compare-result .badge.abajo{background:#5C8A6B;}
+  .compare-result .badge.igual{background:var(--gold);}
+  .compare-result .texto{font-size:13px;color:var(--ink);line-height:1.4;}
+  .compare-result .texto strong{
+    font-family:'Fraunces', serif;
+    font-size:15px;
+    display:block;
+    color:var(--plum);
+    margin-bottom:2px;
+  }
+
+  /* Precio por volumen */
+  .volume-row{
+    display:flex;
+    gap:10px;
+  }
+  .volume-row .field{flex:1;}
+  .pack-result{
+    background:var(--plum);
+    color:#FBF3F0;
+    border-radius:12px;
+    padding:16px 18px;
+    margin-top:4px;
+  }
+  .pack-result .fila{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:13px;
+    color:rgba(251,243,240,0.7);
+    padding:6px 0;
+  }
+  .pack-result .fila:not(:last-child){
+    border-bottom:1px dashed rgba(251,243,240,0.2);
+  }
+  .pack-result .fila strong{
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:600;
+    color:#FBF3F0;
+  }
+  .pack-result .fila.total strong{font-size:20px;}
+
+  /* Mis productos */
+  input[type=text]{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    padding:12px 14px;
+    border-radius:9px;
+    border:1.5px solid var(--line);
+    background:#FDFBFA;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  input[type=text]:focus{border-color:var(--rose);}
+  .prod-row{display:flex;gap:10px;align-items:flex-end;}
+  .prod-row .field{margin-bottom:14px;}
+  .prod-row .field.nombre-field{flex:1.6;}
+  .prod-row .field.costo-field{flex:1;}
+  .add-btn{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    color:#FBF3F0;
+    background:var(--plum);
+    border:none;
+    border-radius:9px;
+    padding:12px;
+    cursor:pointer;
+    margin-bottom:16px;
+  }
+  .add-btn:active{opacity:0.85;}
+  .product-list{max-height:280px;overflow-y:auto;}
+  .product-empty{
+    font-size:13px;
+    color:#8A7A83;
+    padding:10px 2px;
+  }
+  .product-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:11px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .product-item:last-child{border-bottom:none;}
+  .product-item .info{display:flex;flex-direction:column;min-width:0;}
+  .product-item .info .nombre{
+    font-size:14px;
+    font-weight:500;
+    color:var(--plum);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .product-item .info .costo{font-size:12.5px;color:#8A7A83;}
+  .product-item .acciones{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+  .usar-btn{
+    font-family:'Work Sans', sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    color:#FBF3F0;
+    background:var(--rose);
+    border:none;
+    border-radius:20px;
+    padding:7px 14px;
+    cursor:pointer;
+  }
+  .borrar-btn{
+    font-size:18px;
+    line-height:1;
+    color:#B5573B;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:4px 2px;
+  }
+  .producto-activo{
+    display:none;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--plum);
+    background:var(--rose-light);
+    border-radius:20px;
+    padding:6px 12px;
+    margin-bottom:16px;
+    width:fit-content;
+  }
+  .producto-activo button{
+    background:none;
+    border:none;
+    color:var(--plum);
+    font-size:14px;
+    cursor:pointer;
+    padding:0;
+    line-height:1;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Salyn Store</div>
+    <h1>Calculadora de precios</h1>
+    <p class="sub">Ingresa tus costos y el margen que buscas. Verás el precio de venta calculado de dos formas, para que elijas la que más te convenga.</p>
+  </header>
+
+  <div class="card">
+    <div class="section-label">Mis productos</div>
+    <p class="hint" style="margin:-8px 0 14px;">Guárdalos una vez con su costo y luego solo presiona "Usar" para calcular su precio.</p>
+    <div class="prod-row">
+      <div class="field nombre-field">
+        <label for="prodNombre">Producto</label>
+        <input type="text" id="prodNombre" placeholder="Ej. Mascarilla de arcilla">
+      </div>
+      <div class="field costo-field">
+        <label for="prodCosto">Costo</label>
+        <div class="input-row">
+          <span class="prefix">S/</span>
+          <input type="number" id="prodCosto" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+    </div>
+    <button type="button" class="add-btn" id="guardarProductoBtn">Guardar producto</button>
+    <div class="product-list" id="productList"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Costos del producto</div>
+    <div class="producto-activo" id="productoActivo">
+      <span id="productoActivoTexto"></span>
+      <button type="button" id="quitarProductoActivo" title="Quitar">×</button>
+    </div>
+
+    <div class="field">
+      <label for="costo">Costo del producto</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="costo" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="empaque">Empaque</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="empaque" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="presets" id="empaquePresets">
+        <button type="button" class="preset-btn" data-monto="0">Sin empaque</button>
+        <button type="button" class="preset-btn" data-monto="0.30">S/ 0.30</button>
+        <button type="button" class="preset-btn" data-monto="0.50">S/ 0.50</button>
+        <button type="button" class="preset-btn" data-monto="0.80">S/ 0.80</button>
+        <button type="button" class="preset-btn" data-monto="1.20">S/ 1.20</button>
+        <button type="button" class="preset-btn" data-monto="1.80">S/ 1.80</button>
+      </div>
+      <div class="hint">Bolsa, caja, cinta, etiqueta, etc. Elige un monto fijo o escribe el tuyo.</div>
+    </div>
+
+    <div class="field">
+      <label for="tandaCantidad">Cantidad de productos en esta tanda</label>
+      <input type="number" id="tandaCantidad" inputmode="numeric" placeholder="1" min="1" step="1">
+      <div class="hint">El pasaje y el envío Shalom de abajo se reparten entre esta cantidad.</div>
+    </div>
+
+    <div class="field">
+      <label for="pasaje">Pasaje de la tanda</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="pasaje" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="hint">Movilidad total para recoger o entregar toda la tanda (no por producto).</div>
+    </div>
+
+    <div class="field">
+      <label for="envioShalom">Envío Shalom de la tanda</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="envioShalom" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="hint">Costo total de traer toda la tanda por Shalom (no por producto).</div>
+    </div>
+
+    <div class="costo-total">
+      <span>Costo total (por unidad)</span>
+      <span id="costoTotal">S/ 0.00</span>
+    </div>
+    <div class="hint" id="tandaBreakdown" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Margen que buscas</div>
+    <div class="field" style="margin-bottom:6px;">
+      <label for="margen">Porcentaje deseado</label>
+      <div class="input-row pct">
+        <input type="number" id="margen" inputmode="decimal" placeholder="0" min="0" step="1">
+        <span class="prefix">%</span>
+      </div>
+      <div class="presets" id="presets">
+        <button type="button" class="preset-btn" data-pct="20">20%</button>
+        <button type="button" class="preset-btn" data-pct="30">30%</button>
+        <button type="button" class="preset-btn" data-pct="40">40%</button>
+        <button type="button" class="preset-btn" data-pct="50">50%</button>
+        <button type="button" class="preset-btn" data-pct="60">60%</button>
+        <button type="button" class="preset-btn" data-pct="80">80%</button>
+      </div>
+      <div class="hint">Este mismo número se aplica con las dos fórmulas de abajo, para que compares.</div>
+    </div>
+  </div>
+
+  <div class="ticket">
+    <div class="method">Margen sobre el costo (markup)</div>
+    <div class="price" id="precioMarkup">S/ 0.00</div>
+    <div class="sugerido"><span>Precio sugerido (redondeado)</span><strong id="precioMarkupRedondeado">S/ 0.00</strong></div>
+    <div class="breakdown">
+      <div>Ganancia neta<strong id="gananciaMarkup">S/ 0.00</strong></div>
+      <div>Margen real sobre precio<strong id="margenRealMarkup">0%</strong></div>
+    </div>
+  </div>
+
+  <div class="ticket" id="ticketMargen">
+    <div class="method">Margen sobre el precio de venta</div>
+    <div class="price" id="precioMargen">S/ 0.00</div>
+    <div class="sugerido" id="sugeridoMargenWrap"><span>Precio sugerido (redondeado)</span><strong id="precioMargenRedondeado">S/ 0.00</strong></div>
+    <div class="breakdown">
+      <div>Ganancia neta<strong id="gananciaMargen">S/ 0.00</strong></div>
+      <div>Markup real sobre costo<strong id="markupRealMargen">0%</strong></div>
+    </div>
+  </div>
+
+  <p class="note">Sobre el costo: el % se suma directo al costo (ej. 40% sobre S/10 = S/14). Sobre el precio: el % es la parte del precio final que es ganancia (ej. 40% de margen implica que el costo es el 60% del precio de venta). La segunda fórmula suele dar precios más altos para el mismo %. El "precio sugerido" redondea al múltiplo de S/ 0.10 más cercano, para que sea fácil de cobrar y dar vuelto con monedas de 10, 20 y 50 céntimos.</p>
+
+  <div class="card">
+    <div class="section-label">Comparador de escenarios</div>
+    <p class="hint" style="margin:-8px 0 14px;">Mismo costo total, tres márgenes distintos (sobre el costo), para que compares de un vistazo.</p>
+    <div class="scenarios" id="scenarios">
+      <div class="scenario-card" id="scenarioConservador">
+        <div class="etiqueta">Conservador</div>
+        <div class="pct-val" id="pctConservador">—</div>
+        <div class="precio-val" id="precioConservador">S/ 0.00</div>
+        <div class="ganancia-val" id="gananciaConservador">gana S/ 0.00</div>
+      </div>
+      <div class="scenario-card destacado" id="scenarioEstandar">
+        <div class="etiqueta">Estándar</div>
+        <div class="pct-val" id="pctEstandar">—</div>
+        <div class="precio-val" id="precioEstandar">S/ 0.00</div>
+        <div class="ganancia-val" id="gananciaEstandar">gana S/ 0.00</div>
+      </div>
+      <div class="scenario-card" id="scenarioAgresivo">
+        <div class="etiqueta">Agresivo</div>
+        <div class="pct-val" id="pctAgresivo">—</div>
+        <div class="precio-val" id="precioAgresivo">S/ 0.00</div>
+        <div class="ganancia-val" id="gananciaAgresivo">gana S/ 0.00</div>
+      </div>
+    </div>
+    <div class="hint" style="margin-top:12px;">"Estándar" es el % que pusiste arriba. Conservador y agresivo son 10 puntos menos y 10 puntos más.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Precio de la competencia</div>
+    <div class="field">
+      <label for="precioCompetencia">¿A cuánto lo venden otros?</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="precioCompetencia" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="hint">Compara contra tu precio sugerido (markup) redondeado.</div>
+    </div>
+    <div class="compare-result" id="compareResult" style="display:none;">
+      <div class="badge" id="compareBadge">—</div>
+      <div class="texto" id="compareTexto"><strong>—</strong>—</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Precio por volumen / promoción</div>
+    <div class="volume-row">
+      <div class="field">
+        <label for="packUnidades">Unidades por pack</label>
+        <input type="number" id="packUnidades" inputmode="numeric" placeholder="1" min="1" step="1">
+      </div>
+      <div class="field">
+        <label for="packDescuento">Descuento del pack</label>
+        <div class="input-row pct">
+          <input type="number" id="packDescuento" inputmode="decimal" placeholder="0" min="0" max="100" step="1">
+          <span class="prefix">%</span>
+        </div>
+      </div>
+    </div>
+    <div class="hint" style="margin-bottom:12px;">Se aplica sobre tu precio sugerido (markup) redondeado, por unidad.</div>
+    <div class="pack-result">
+      <div class="fila"><span>Precio normal (unidad × pack)</span><strong id="packNormal">S/ 0.00</strong></div>
+      <div class="fila"><span>Precio por unidad en el pack</span><strong id="packUnidad">S/ 0.00</strong></div>
+      <div class="fila total"><span>Precio final del pack</span><strong id="packTotal">S/ 0.00</strong></div>
+      <div class="fila"><span>Ganancia total del pack</span><strong id="packGanancia">S/ 0.00</strong></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const costoEl = document.getElementById('costo');
+  const empaqueEl = document.getElementById('empaque');
+  const pasajeEl = document.getElementById('pasaje');
+  const envioShalomEl = document.getElementById('envioShalom');
+  const tandaCantidadEl = document.getElementById('tandaCantidad');
+  const margenEl = document.getElementById('margen');
+  const precioCompetenciaEl = document.getElementById('precioCompetencia');
+  const packUnidadesEl = document.getElementById('packUnidades');
+  const packDescuentoEl = document.getElementById('packDescuento');
+
+  function num(el){
+    const v = parseFloat(el.value);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+  function money(v){
+    return 'S/ ' + v.toLocaleString('es-PE', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  function moneyRedondeado(v){
+    const redondeado = Math.round(v * 10) / 10;
+    return money(redondeado);
+  }
+  function pct(v){
+    return v.toLocaleString('es-PE', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+  }
+
+  function calcular(){
+    const costo = num(costoEl);
+    const empaque = num(empaqueEl);
+    const pasaje = num(pasajeEl);
+    const envioShalom = num(envioShalomEl);
+    const tandaCantidad = Math.max(1, Math.round(num(tandaCantidadEl)) || 1);
+    const pasajePorUnidad = pasaje / tandaCantidad;
+    const envioPorUnidad = envioShalom / tandaCantidad;
+    const costoTotal = costo + empaque + pasajePorUnidad + envioPorUnidad;
+    const margenPct = num(margenEl);
+
+    document.getElementById('costoTotal').textContent = money(costoTotal);
+    const tandaBreakdown = document.getElementById('tandaBreakdown');
+    if (tandaCantidad > 1 && (pasaje > 0 || envioShalom > 0)) {
+      tandaBreakdown.textContent = 'Incluye ' + money(pasajePorUnidad) + ' de pasaje y ' + money(envioPorUnidad) + ' de envío por unidad (tanda de ' + tandaCantidad + ' productos).';
+    } else {
+      tandaBreakdown.textContent = '';
+    }
+
+    // Método 1: markup sobre el costo
+    const precioMarkup = costoTotal * (1 + margenPct/100);
+    const gananciaMarkup = precioMarkup - costoTotal;
+    const margenRealMarkup = precioMarkup > 0 ? (gananciaMarkup / precioMarkup) * 100 : 0;
+
+    document.getElementById('precioMarkup').textContent = money(precioMarkup);
+    document.getElementById('precioMarkupRedondeado').textContent = moneyRedondeado(precioMarkup);
+    document.getElementById('gananciaMarkup').textContent = money(gananciaMarkup);
+    document.getElementById('margenRealMarkup').textContent = pct(margenRealMarkup);
+
+    // Método 2: margen sobre el precio de venta
+    const ticketMargen = document.getElementById('ticketMargen');
+    const sugeridoMargenWrap = document.getElementById('sugeridoMargenWrap');
+    if (margenPct >= 100) {
+      ticketMargen.classList.add('disabled');
+      sugeridoMargenWrap.style.display = 'none';
+      document.getElementById('precioMargen').textContent = 'No aplica a 100% o más';
+      document.getElementById('gananciaMargen').textContent = '—';
+      document.getElementById('markupRealMargen').textContent = '—';
+    } else {
+      ticketMargen.classList.remove('disabled');
+      sugeridoMargenWrap.style.display = 'flex';
+      const precioMargen = costoTotal / (1 - margenPct/100);
+      const gananciaMargen = precioMargen - costoTotal;
+      const markupRealMargen = costoTotal > 0 ? (gananciaMargen / costoTotal) * 100 : 0;
+
+      document.getElementById('precioMargen').textContent = money(precioMargen);
+      document.getElementById('precioMargenRedondeado').textContent = moneyRedondeado(precioMargen);
+      document.getElementById('gananciaMargen').textContent = money(gananciaMargen);
+      document.getElementById('markupRealMargen').textContent = pct(markupRealMargen);
+    }
+
+    // Comparador de escenarios (markup sobre el costo, ±10 puntos)
+    const escenarios = [
+      { id: 'Conservador', pct: Math.max(0, margenPct - 10) },
+      { id: 'Estandar', pct: margenPct },
+      { id: 'Agresivo', pct: margenPct + 10 }
+    ];
+    escenarios.forEach(e => {
+      const precio = costoTotal * (1 + e.pct/100);
+      const ganancia = precio - costoTotal;
+      document.getElementById('pct' + e.id).textContent = e.pct.toLocaleString('es-PE') + '%';
+      document.getElementById('precio' + e.id).textContent = moneyRedondeado(precio);
+      document.getElementById('ganancia' + e.id).textContent = 'gana ' + money(ganancia);
+    });
+
+    // Precio de la competencia
+    const precioSugeridoRedondeado = Math.round(precioMarkup * 10) / 10;
+    const precioCompetencia = num(precioCompetenciaEl);
+    const compareResult = document.getElementById('compareResult');
+    const compareBadge = document.getElementById('compareBadge');
+    const compareTexto = document.getElementById('compareTexto');
+    if (precioCompetencia > 0) {
+      compareResult.style.display = 'flex';
+      const diferencia = precioSugeridoRedondeado - precioCompetencia;
+      const diferenciaAbs = Math.abs(diferencia);
+      const diferenciaPct = precioCompetencia > 0 ? (diferenciaAbs / precioCompetencia) * 100 : 0;
+      if (Math.abs(diferencia) < 0.05) {
+        compareBadge.className = 'badge igual';
+        compareBadge.textContent = '=';
+        compareTexto.innerHTML = '<strong>Estás igual que la competencia</strong>Tu precio sugerido coincide con lo que cobran otros.';
+      } else if (diferencia > 0) {
+        compareBadge.className = 'badge arriba';
+        compareBadge.textContent = '↑';
+        compareTexto.innerHTML = '<strong>Estás ' + money(diferenciaAbs) + ' más caro</strong>Eso es ' + pct(diferenciaPct) + ' por encima del mercado (S/ ' + precioCompetencia.toLocaleString('es-PE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ').';
+      } else {
+        compareBadge.className = 'badge abajo';
+        compareBadge.textContent = '↓';
+        compareTexto.innerHTML = '<strong>Estás ' + money(diferenciaAbs) + ' más barato</strong>Eso es ' + pct(diferenciaPct) + ' por debajo del mercado — hay espacio para subir el precio si quieres.';
+      }
+    } else {
+      compareResult.style.display = 'none';
+    }
+
+    // Precio por volumen / promoción
+    const packUnidades = Math.max(1, Math.round(num(packUnidadesEl)) || 1);
+    const packDescuentoPct = Math.min(100, num(packDescuentoEl));
+    const packNormal = precioSugeridoRedondeado * packUnidades;
+    const packTotal = packNormal * (1 - packDescuentoPct/100);
+    const packUnidad = packTotal / packUnidades;
+    const packGanancia = packTotal - (costoTotal * packUnidades);
+
+    document.getElementById('packNormal').textContent = money(packNormal);
+    document.getElementById('packUnidad').textContent = money(packUnidad);
+    document.getElementById('packTotal').textContent = money(packTotal);
+    document.getElementById('packGanancia').textContent = money(packGanancia);
+  }
+
+  const margenPresetBtns = document.querySelectorAll('#presets .preset-btn');
+  function marcarMargenPresetActivo(){
+    const actual = margenEl.value;
+    margenPresetBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.pct === actual);
+    });
+  }
+  margenPresetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      margenEl.value = btn.dataset.pct;
+      marcarMargenPresetActivo();
+      calcular();
+    });
+  });
+
+  const empaquePresetBtns = document.querySelectorAll('#empaquePresets .preset-btn');
+  function marcarEmpaquePresetActivo(){
+    const actual = parseFloat(empaqueEl.value);
+    empaquePresetBtns.forEach(btn => {
+      btn.classList.toggle('active', !isNaN(actual) && parseFloat(btn.dataset.monto) === actual);
+    });
+  }
+  empaquePresetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      empaqueEl.value = btn.dataset.monto;
+      marcarEmpaquePresetActivo();
+      calcular();
+    });
+  });
+
+  [costoEl, empaqueEl, pasajeEl, envioShalomEl, tandaCantidadEl, margenEl, precioCompetenciaEl, packUnidadesEl, packDescuentoEl].forEach(el => el.addEventListener('input', () => {
+    marcarMargenPresetActivo();
+    marcarEmpaquePresetActivo();
+    calcular();
+  }));
+
+  // Mis productos (guardados en este navegador)
+  const LS_KEY = 'salynProductosGuardados';
+  const prodNombreEl = document.getElementById('prodNombre');
+  const prodCostoEl = document.getElementById('prodCosto');
+  const productListEl = document.getElementById('productList');
+  const productoActivoEl = document.getElementById('productoActivo');
+  const productoActivoTextoEl = document.getElementById('productoActivoTexto');
+
+  function cargarProductos(){
+    try {
+      const data = JSON.parse(localStorage.getItem(LS_KEY));
+      return Array.isArray(data) ? data : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function guardarProductosLS(lista){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(lista)); } catch (e) {}
+  }
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  let productos = cargarProductos();
+
+  function renderProductos(){
+    if (productos.length === 0) {
+      productListEl.innerHTML = '<div class="product-empty">Aún no guardas productos.</div>';
+      return;
+    }
+    productListEl.innerHTML = productos.map((p, i) =>
+      '<div class="product-item">' +
+        '<div class="info">' +
+          '<span class="nombre">' + escapeHtml(p.nombre) + '</span>' +
+          '<span class="costo">' + money(p.costo) + '</span>' +
+        '</div>' +
+        '<div class="acciones">' +
+          '<button type="button" class="usar-btn" data-idx="' + i + '">Usar</button>' +
+          '<button type="button" class="borrar-btn" data-idx="' + i + '" title="Eliminar">×</button>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  document.getElementById('guardarProductoBtn').addEventListener('click', () => {
+    const nombre = prodNombreEl.value.trim();
+    const costo = num(prodCostoEl);
+    if (!nombre) return;
+    productos.push({ nombre, costo });
+    guardarProductosLS(productos);
+    prodNombreEl.value = '';
+    prodCostoEl.value = '';
+    renderProductos();
+  });
+
+  productListEl.addEventListener('click', (e) => {
+    const usarBtn = e.target.closest('.usar-btn');
+    const borrarBtn = e.target.closest('.borrar-btn');
+    if (usarBtn) {
+      const idx = parseInt(usarBtn.dataset.idx, 10);
+      const p = productos[idx];
+      if (!p) return;
+      costoEl.value = p.costo;
+      productoActivoTextoEl.textContent = 'Calculando: ' + p.nombre;
+      productoActivoEl.style.display = 'flex';
+      calcular();
+      window.scrollTo({ top: document.getElementById('productoActivo').offsetTop - 80, behavior: 'smooth' });
+    } else if (borrarBtn) {
+      const idx = parseInt(borrarBtn.dataset.idx, 10);
+      productos.splice(idx, 1);
+      guardarProductosLS(productos);
+      renderProductos();
+    }
+  });
+
+  document.getElementById('quitarProductoActivo').addEventListener('click', () => {
+    productoActivoEl.style.display = 'none';
+  });
+
+  renderProductos();
+  marcarMargenPresetActivo();
+  marcarEmpaquePresetActivo();
+  calcular();
+
+  // Registrar el service worker para que funcione sin internet
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+
+</body>
+</html>
