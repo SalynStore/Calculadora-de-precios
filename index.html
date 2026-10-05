@@ -446,6 +446,231 @@
     padding:0;
     line-height:1;
   }
+
+  /* Combos / Packs */
+  select{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:14.5px;
+    padding:11px 14px;
+    border-radius:9px;
+    border:1.5px solid var(--line);
+    background:#FDFBFA;
+    color:var(--ink);
+    outline:none;
+  }
+  select:focus{border-color:var(--rose);}
+  .combo-items{
+    max-height:320px;
+    overflow-y:auto;
+    margin-bottom:4px;
+  }
+  .combo-empty{
+    font-size:13px;
+    color:#8A7A83;
+    padding:12px 2px;
+  }
+  .combo-item-row{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    padding:10px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .combo-item-row:first-child{padding-top:2px;}
+  .combo-item-row:last-child{border-bottom:none;}
+  .combo-item-top{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .combo-item-row input[type=text]{
+    flex:1;
+    font-size:14px;
+    padding:9px 10px;
+  }
+  .combo-item-bottom{
+    display:flex;
+    gap:8px;
+  }
+  .combo-item-bottom .costo-mini{flex:1;min-width:0;}
+  .combo-item-bottom .costo-mini label{
+    display:block;
+    font-size:10.5px;
+    color:#8A7A83;
+    margin-bottom:3px;
+  }
+  .combo-item-row .costo-wrap{
+    position:relative;
+    width:100%;
+  }
+  .combo-item-row .costo-wrap span{
+    position:absolute;
+    left:9px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:12.5px;
+    color:#8A7A83;
+  }
+  .combo-item-row .costo-wrap input{
+    width:100%;
+    font-size:14px;
+    padding:9px 8px 9px 26px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:#FDFBFA;
+    color:var(--ink);
+    outline:none;
+    -moz-appearance:textfield;
+  }
+  .combo-item-row .costo-wrap input::-webkit-outer-spin-button,
+  .combo-item-row .costo-wrap input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .combo-item-row .quitar-item{
+    flex-shrink:0;
+    background:none;
+    border:none;
+    color:#B5573B;
+    font-size:19px;
+    line-height:1;
+    cursor:pointer;
+    padding:4px;
+  }
+  .combo-subtotal{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding-top:12px;
+    margin-top:2px;
+    margin-bottom:16px;
+    border-top:1px dashed var(--line);
+    font-size:13.5px;
+    color:#6B5560;
+  }
+  .combo-subtotal strong{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--plum);
+  }
+  .ahorro-result .badge.ahorro{background:#5C8A6B;}
+  .ahorro-result .badge.perdida{background:#B5573B;}
+
+  /* Pestañas */
+  .tabs{
+    display:flex;
+    gap:8px;
+    background:#FFFFFF;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:5px;
+    margin-bottom:20px;
+    position:sticky;
+    top:10px;
+    z-index:10;
+  }
+  .tab-btn{
+    flex:1;
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--plum);
+    background:transparent;
+    border:none;
+    border-radius:8px;
+    padding:11px 8px;
+    cursor:pointer;
+    text-align:center;
+  }
+  .tab-btn.active{
+    background:var(--plum);
+    color:#FBF3F0;
+  }
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* Plantillas de combos */
+  .plantilla-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:11px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .plantilla-item:last-child{border-bottom:none;}
+  .plantilla-item .info{display:flex;flex-direction:column;min-width:0;}
+  .plantilla-item .info .nombre{
+    font-size:14px;
+    font-weight:500;
+    color:var(--plum);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .plantilla-item .info .detalle{font-size:12.5px;color:#8A7A83;}
+  .plantilla-item .acciones{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+
+  /* Alerta de margen mínimo */
+  .aviso-margen{
+    display:none;
+    align-items:center;
+    gap:8px;
+    background:rgba(181,87,59,0.15);
+    border:1.5px solid #B5573B;
+    border-radius:10px;
+    padding:10px 12px;
+    margin-top:12px;
+    font-size:12.5px;
+    color:#8A2F15;
+    font-weight:500;
+  }
+  .valor-bajo{color:#D98B6F !important;}
+
+  /* Historial de costos */
+  .historial-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:9px 2px;
+    border-bottom:1px solid var(--line);
+    font-size:12.5px;
+  }
+  .historial-item:last-child{border-bottom:none;}
+  .historial-item .producto{color:var(--plum);font-weight:500;}
+  .historial-item .fecha{color:#8A7A83;white-space:nowrap;}
+  .historial-item .cambio{color:#6B5560;}
+  .historial-item .cambio strong{color:var(--plum);}
+  .historial-empty{font-size:13px;color:#8A7A83;padding:10px 2px;}
+  .historial-list{max-height:220px;overflow-y:auto;}
+  .costo-edit-row{display:flex;gap:6px;align-items:center;}
+  .costo-edit-row input{
+    width:80px;
+    font-size:13px;
+    padding:6px 8px;
+    border-radius:6px;
+    border:1.5px solid var(--rose);
+    background:#fff;
+  }
+  .costo-edit-row button{
+    font-size:12px;
+    font-weight:600;
+    color:#fff;
+    background:var(--rose);
+    border:none;
+    border-radius:16px;
+    padding:6px 10px;
+    cursor:pointer;
+  }
+  .actualizar-btn{
+    font-size:11.5px;
+    font-weight:500;
+    color:var(--gold);
+    background:none;
+    border:1px solid var(--gold);
+    border-radius:16px;
+    padding:5px 10px;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -456,6 +681,13 @@
     <h1>Calculadora de precios</h1>
     <p class="sub">Ingresa tus costos y el margen que buscas. Verás el precio de venta calculado de dos formas, para que elijas la que más te convenga.</p>
   </header>
+
+  <div class="tabs">
+    <button type="button" class="tab-btn active" id="tabBtnIndividual" data-tab="tabIndividual">Producto individual</button>
+    <button type="button" class="tab-btn" id="tabBtnCombo" data-tab="tabCombo">Combos / Packs</button>
+  </div>
+
+  <div class="tab-panel active" id="tabIndividual">
 
   <div class="card">
     <div class="section-label">Mis productos</div>
@@ -475,6 +707,12 @@
     </div>
     <button type="button" class="add-btn" id="guardarProductoBtn">Guardar producto</button>
     <div class="product-list" id="productList"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Historial de costos</div>
+    <p class="hint" style="margin:-8px 0 14px;">Cuando actualizas el costo de un producto guardado, queda registrado aquí con la fecha, para que veas cómo ha subido con el tiempo.</p>
+    <div class="historial-list" id="historialList"></div>
   </div>
 
   <div class="card">
@@ -558,6 +796,14 @@
       </div>
       <div class="hint">Este mismo número se aplica con las dos fórmulas de abajo, para que compares.</div>
     </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="margenMinimo">Alerta de margen mínimo (opcional)</label>
+      <div class="input-row pct">
+        <input type="number" id="margenMinimo" inputmode="decimal" placeholder="Ej. 25" min="0" step="1">
+        <span class="prefix">%</span>
+      </div>
+      <div class="hint">Si tu margen real cae por debajo de este %, te lo marcamos en rojo. Se guarda y se usa también en Combos.</div>
+    </div>
   </div>
 
   <div class="ticket">
@@ -569,6 +815,7 @@
       <div>Margen real sobre precio<strong id="margenRealMarkup">0%</strong></div>
     </div>
   </div>
+  <div class="aviso-margen" id="avisoMargenBajo">⚠️ <span>Tu margen real está por debajo del mínimo que configuraste.</span></div>
 
   <div class="ticket" id="ticketMargen">
     <div class="method">Margen sobre el precio de venta</div>
@@ -605,7 +852,7 @@
         <div class="ganancia-val" id="gananciaAgresivo">gana S/ 0.00</div>
       </div>
     </div>
-    <div class="hint" style="margin-top:12px;">"Estándar" es el % que pusiste arriba. Conservador y agresivo son 10 puntos menos y 10 puntos más.</div>
+    <div class="hint" style="margin-top:12px;">"Estándar" es el % que pusiste arriba. Conservador y agresivo son 10 puntos menos y 10 puntos más. Estos precios son exactos (sin redondear a S/ 0.10), para que se note bien la diferencia entre márgenes.</div>
   </div>
 
   <div class="card">
@@ -648,6 +895,93 @@
     </div>
   </div>
 
+  </div>
+
+  <div class="tab-panel" id="tabCombo">
+
+  <div class="card">
+    <div class="section-label">Plantillas de combos</div>
+    <p class="hint" style="margin:-8px 0 14px;">Guarda un combo armado (ej. "Combo Día de la Madre") y vuelve a usarlo con un clic, en vez de rearmarlo cada vez.</p>
+    <div id="plantillasList">
+      <div class="historial-empty">Aún no guardas plantillas de combos.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Combos / Packs (varios productos distintos)</div>
+    <p class="hint" style="margin:-8px 0 14px;">Arma un combo juntando productos diferentes. "Costo" es lo que te cuesta a ti (se usa para calcular el precio del combo). "Venta" es opcional: el precio al que ya vendes ese producto suelto, para que el ahorro del cliente sea exacto en vez de estimado.</p>
+
+    <div class="field">
+      <label for="comboSelectGuardado">Agregar desde "Mis productos"</label>
+      <select id="comboSelectGuardado">
+        <option value="">Elige un producto guardado…</option>
+      </select>
+    </div>
+
+    <div class="combo-items" id="comboItems">
+      <div class="combo-empty">Aún no agregas productos al combo.</div>
+    </div>
+    <button type="button" class="add-btn" id="comboAgregarManualBtn" style="background:var(--rose-light); color:var(--plum); margin-top:10px;">+ Agregar producto manual</button>
+
+    <div class="combo-subtotal">
+      <span>Costo de productos del combo</span>
+      <strong id="comboSubtotalProductos">S/ 0.00</strong>
+    </div>
+
+    <div class="field">
+      <label for="comboEmpaque">Empaque especial del combo (opcional)</label>
+      <div class="input-row">
+        <span class="prefix">S/</span>
+        <input type="number" id="comboEmpaque" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="hint">Bolsa, caja o envoltorio especial para el combo completo.</div>
+    </div>
+
+    <div class="field" style="margin-bottom:6px;">
+      <label for="comboMargen">Margen del combo</label>
+      <div class="input-row pct">
+        <input type="number" id="comboMargen" inputmode="decimal" placeholder="0" min="0" step="1">
+        <span class="prefix">%</span>
+      </div>
+      <div class="presets" id="comboPresets">
+        <button type="button" class="preset-btn" data-pct="15">15%</button>
+        <button type="button" class="preset-btn" data-pct="20">20%</button>
+        <button type="button" class="preset-btn" data-pct="30">30%</button>
+        <button type="button" class="preset-btn" data-pct="40">40%</button>
+        <button type="button" class="preset-btn" data-pct="50">50%</button>
+      </div>
+      <div class="hint">Puede ser distinto al margen de productos sueltos de arriba.</div>
+    </div>
+
+    <div class="field" style="margin-bottom:10px;">
+      <label for="plantillaNombre">Guardar este combo como plantilla</label>
+      <input type="text" id="plantillaNombre" placeholder="Ej. Combo Día de la Madre">
+    </div>
+    <button type="button" class="add-btn" id="guardarPlantillaBtn" style="background:var(--gold);">Guardar plantilla</button>
+  </div>
+
+  <div class="ticket" id="ticketCombo">
+    <div class="method">Precio del combo</div>
+    <div class="price" id="precioCombo">S/ 0.00</div>
+    <div class="sugerido"><span>Precio sugerido (redondeado)</span><strong id="precioComboRedondeado">S/ 0.00</strong></div>
+    <div class="breakdown">
+      <div>Costo total del combo<strong id="costoTotalCombo">S/ 0.00</strong></div>
+      <div>Ganancia neta<strong id="gananciaCombo">S/ 0.00</strong></div>
+    </div>
+  </div>
+  <div class="aviso-margen" id="avisoMargenBajoCombo">⚠️ <span>El margen real del combo está por debajo de tu mínimo configurado.</span></div>
+
+  <div class="card">
+    <div class="section-label">Ahorro para el cliente</div>
+    <p class="hint" style="margin:-8px 0 0;">Compara el precio del combo contra comprar cada producto suelto, usando el margen de "Margen que buscas" de arriba.</p>
+    <div class="compare-result ahorro-result" id="ahorroComboResult" style="display:none;">
+      <div class="badge" id="ahorroBadge">S/</div>
+      <div class="texto" id="ahorroTexto"><strong>—</strong>—</div>
+    </div>
+  </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -657,6 +991,7 @@
   const envioShalomEl = document.getElementById('envioShalom');
   const tandaCantidadEl = document.getElementById('tandaCantidad');
   const margenEl = document.getElementById('margen');
+  const margenMinimoEl = document.getElementById('margenMinimo');
   const precioCompetenciaEl = document.getElementById('precioCompetencia');
   const packUnidadesEl = document.getElementById('packUnidades');
   const packDescuentoEl = document.getElementById('packDescuento');
@@ -703,7 +1038,17 @@
     document.getElementById('precioMarkup').textContent = money(precioMarkup);
     document.getElementById('precioMarkupRedondeado').textContent = moneyRedondeado(precioMarkup);
     document.getElementById('gananciaMarkup').textContent = money(gananciaMarkup);
-    document.getElementById('margenRealMarkup').textContent = pct(margenRealMarkup);
+    const margenRealMarkupEl = document.getElementById('margenRealMarkup');
+    margenRealMarkupEl.textContent = pct(margenRealMarkup);
+    const margenMinimo = num(margenMinimoEl);
+    const avisoMargenBajo = document.getElementById('avisoMargenBajo');
+    if (margenMinimo > 0 && margenRealMarkup < margenMinimo) {
+      avisoMargenBajo.style.display = 'flex';
+      margenRealMarkupEl.classList.add('valor-bajo');
+    } else {
+      avisoMargenBajo.style.display = 'none';
+      margenRealMarkupEl.classList.remove('valor-bajo');
+    }
 
     // Método 2: margen sobre el precio de venta
     const ticketMargen = document.getElementById('ticketMargen');
@@ -737,7 +1082,7 @@
       const precio = costoTotal * (1 + e.pct/100);
       const ganancia = precio - costoTotal;
       document.getElementById('pct' + e.id).textContent = e.pct.toLocaleString('es-PE') + '%';
-      document.getElementById('precio' + e.id).textContent = moneyRedondeado(precio);
+      document.getElementById('precio' + e.id).textContent = money(precio);
       document.getElementById('ganancia' + e.id).textContent = 'gana ' + money(ganancia);
     });
 
@@ -781,6 +1126,8 @@
     document.getElementById('packUnidad').textContent = money(packUnidad);
     document.getElementById('packTotal').textContent = money(packTotal);
     document.getElementById('packGanancia').textContent = money(packGanancia);
+
+    calcularCombo(margenPct);
   }
 
   const margenPresetBtns = document.querySelectorAll('#presets .preset-btn');
@@ -819,6 +1166,17 @@
     calcular();
   }));
 
+  // Margen mínimo (se guarda en el navegador)
+  const MARGEN_MINIMO_KEY = 'salynMargenMinimo';
+  try {
+    const guardado = localStorage.getItem(MARGEN_MINIMO_KEY);
+    if (guardado !== null) margenMinimoEl.value = guardado;
+  } catch (e) {}
+  margenMinimoEl.addEventListener('input', () => {
+    try { localStorage.setItem(MARGEN_MINIMO_KEY, margenMinimoEl.value); } catch (e) {}
+    calcular();
+  });
+
   // Mis productos (guardados en este navegador)
   const LS_KEY = 'salynProductosGuardados';
   const prodNombreEl = document.getElementById('prodNombre');
@@ -845,24 +1203,66 @@
   }
 
   let productos = cargarProductos();
+  let editandoIdx = null;
+
+  // Historial de costos
+  const HISTORIAL_KEY = 'salynHistorialCostos';
+  const historialListEl = document.getElementById('historialList');
+  function cargarHistorial(){
+    try {
+      const data = JSON.parse(localStorage.getItem(HISTORIAL_KEY));
+      return Array.isArray(data) ? data : [];
+    } catch (e) { return []; }
+  }
+  function guardarHistorialLS(lista){
+    try { localStorage.setItem(HISTORIAL_KEY, JSON.stringify(lista)); } catch (e) {}
+  }
+  let historial = cargarHistorial();
+
+  function renderHistorial(){
+    if (historial.length === 0) {
+      historialListEl.innerHTML = '<div class="historial-empty">Aún no hay cambios de costo registrados.</div>';
+      return;
+    }
+    const items = historial.slice().reverse().slice(0, 30);
+    historialListEl.innerHTML = items.map(h => {
+      const fecha = new Date(h.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      return '<div class="historial-item">' +
+        '<div><div class="producto">' + escapeHtml(h.nombre) + '</div>' +
+        '<div class="cambio">' + money(h.costoAnterior) + ' → <strong>' + money(h.costoNuevo) + '</strong></div></div>' +
+        '<div class="fecha">' + fecha + '</div>' +
+      '</div>';
+    }).join('');
+  }
 
   function renderProductos(){
     if (productos.length === 0) {
       productListEl.innerHTML = '<div class="product-empty">Aún no guardas productos.</div>';
       return;
     }
-    productListEl.innerHTML = productos.map((p, i) =>
-      '<div class="product-item">' +
+    productListEl.innerHTML = productos.map((p, i) => {
+      if (editandoIdx === i) {
+        return '<div class="product-item">' +
+          '<div class="info"><span class="nombre">' + escapeHtml(p.nombre) + '</span></div>' +
+          '<div class="costo-edit-row">' +
+            '<span>S/</span>' +
+            '<input type="number" class="edit-costo-input" data-idx="' + i + '" inputmode="decimal" min="0" step="0.01" value="' + p.costo + '">' +
+            '<button type="button" class="confirmar-edit" data-idx="' + i + '">✓</button>' +
+          '</div>' +
+        '</div>';
+      }
+      return '<div class="product-item">' +
         '<div class="info">' +
           '<span class="nombre">' + escapeHtml(p.nombre) + '</span>' +
           '<span class="costo">' + money(p.costo) + '</span>' +
         '</div>' +
         '<div class="acciones">' +
+          '<button type="button" class="actualizar-btn" data-idx="' + i + '">Actualizar</button>' +
           '<button type="button" class="usar-btn" data-idx="' + i + '">Usar</button>' +
           '<button type="button" class="borrar-btn" data-idx="' + i + '" title="Eliminar">×</button>' +
         '</div>' +
-      '</div>'
-    ).join('');
+      '</div>';
+    }).join('');
   }
 
   document.getElementById('guardarProductoBtn').addEventListener('click', () => {
@@ -874,11 +1274,14 @@
     prodNombreEl.value = '';
     prodCostoEl.value = '';
     renderProductos();
+    renderComboSelectOptions();
   });
 
   productListEl.addEventListener('click', (e) => {
     const usarBtn = e.target.closest('.usar-btn');
     const borrarBtn = e.target.closest('.borrar-btn');
+    const actualizarBtn = e.target.closest('.actualizar-btn');
+    const confirmarBtn = e.target.closest('.confirmar-edit');
     if (usarBtn) {
       const idx = parseInt(usarBtn.dataset.idx, 10);
       const p = productos[idx];
@@ -893,6 +1296,25 @@
       productos.splice(idx, 1);
       guardarProductosLS(productos);
       renderProductos();
+      renderComboSelectOptions();
+    } else if (actualizarBtn) {
+      editandoIdx = parseInt(actualizarBtn.dataset.idx, 10);
+      renderProductos();
+    } else if (confirmarBtn) {
+      const idx = parseInt(confirmarBtn.dataset.idx, 10);
+      const input = productListEl.querySelector('.edit-costo-input[data-idx="' + idx + '"]');
+      const nuevoCosto = num(input);
+      const p = productos[idx];
+      if (p && nuevoCosto !== p.costo) {
+        historial.push({ fecha: new Date().toISOString(), nombre: p.nombre, costoAnterior: p.costo, costoNuevo: nuevoCosto });
+        guardarHistorialLS(historial);
+        p.costo = nuevoCosto;
+        guardarProductosLS(productos);
+        renderHistorial();
+        renderComboSelectOptions();
+      }
+      editandoIdx = null;
+      renderProductos();
     }
   });
 
@@ -900,9 +1322,246 @@
     productoActivoEl.style.display = 'none';
   });
 
+  // Combos / Packs (varios productos distintos)
+  const comboItemsEl = document.getElementById('comboItems');
+  const comboSelectGuardadoEl = document.getElementById('comboSelectGuardado');
+  const comboEmpaqueEl = document.getElementById('comboEmpaque');
+  const comboMargenEl = document.getElementById('comboMargen');
+  let comboItems = [];
+
+  function renderComboSelectOptions(){
+    const actual = comboSelectGuardadoEl.value;
+    comboSelectGuardadoEl.innerHTML = '<option value="">Elige un producto guardado…</option>' +
+      productos.map((p, i) => '<option value="' + i + '">' + escapeHtml(p.nombre) + ' — ' + money(p.costo) + '</option>').join('');
+    comboSelectGuardadoEl.value = actual;
+  }
+
+  function renderComboItems(){
+    if (comboItems.length === 0) {
+      comboItemsEl.innerHTML = '<div class="combo-empty">Aún no agregas productos al combo.</div>';
+      return;
+    }
+    comboItemsEl.innerHTML = comboItems.map((item, i) =>
+      '<div class="combo-item-row">' +
+        '<div class="combo-item-top">' +
+          '<input type="text" class="combo-nombre" data-idx="' + i + '" placeholder="Nombre del producto" value="' + escapeHtml(item.nombre) + '">' +
+          '<button type="button" class="quitar-item" data-idx="' + i + '" title="Quitar">×</button>' +
+        '</div>' +
+        '<div class="combo-item-bottom">' +
+          '<div class="costo-mini"><label>Costo</label><div class="costo-wrap"><span>S/</span><input type="number" class="combo-costo" data-idx="' + i + '" inputmode="decimal" min="0" step="0.01" value="' + item.costo + '"></div></div>' +
+          '<div class="costo-mini"><label>Venta (opcional)</label><div class="costo-wrap"><span>S/</span><input type="number" class="combo-venta" data-idx="' + i + '" inputmode="decimal" min="0" step="0.01" value="' + (item.precioVenta || '') + '" placeholder="0.00"></div></div>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  comboSelectGuardadoEl.addEventListener('change', () => {
+    const idx = comboSelectGuardadoEl.value;
+    if (idx === '') return;
+    const p = productos[parseInt(idx, 10)];
+    if (p) {
+      comboItems.push({ nombre: p.nombre, costo: p.costo, precioVenta: 0 });
+      renderComboItems();
+      calcular();
+    }
+    comboSelectGuardadoEl.value = '';
+  });
+
+  document.getElementById('comboAgregarManualBtn').addEventListener('click', () => {
+    comboItems.push({ nombre: '', costo: 0, precioVenta: 0 });
+    renderComboItems();
+  });
+
+  comboItemsEl.addEventListener('input', (e) => {
+    const idx = parseInt(e.target.dataset.idx, 10);
+    if (isNaN(idx) || !comboItems[idx]) return;
+    if (e.target.classList.contains('combo-nombre')) {
+      comboItems[idx].nombre = e.target.value;
+    } else if (e.target.classList.contains('combo-costo')) {
+      comboItems[idx].costo = num(e.target);
+    } else if (e.target.classList.contains('combo-venta')) {
+      comboItems[idx].precioVenta = num(e.target);
+    }
+    calcular();
+  });
+
+  comboItemsEl.addEventListener('click', (e) => {
+    const quitarBtn = e.target.closest('.quitar-item');
+    if (quitarBtn) {
+      const idx = parseInt(quitarBtn.dataset.idx, 10);
+      comboItems.splice(idx, 1);
+      renderComboItems();
+      calcular();
+    }
+  });
+
+  const comboPresetBtns = document.querySelectorAll('#comboPresets .preset-btn');
+  function marcarComboPresetActivo(){
+    const actual = comboMargenEl.value;
+    comboPresetBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.pct === actual);
+    });
+  }
+  comboPresetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      comboMargenEl.value = btn.dataset.pct;
+      marcarComboPresetActivo();
+      calcular();
+    });
+  });
+  [comboEmpaqueEl, comboMargenEl].forEach(el => el.addEventListener('input', () => {
+    marcarComboPresetActivo();
+    calcular();
+  }));
+
+  function calcularCombo(margenPrincipalPct){
+    const costoProductosCombo = comboItems.reduce((sum, item) => sum + (isNaN(item.costo) ? 0 : item.costo), 0);
+    const comboEmpaqueVal = num(comboEmpaqueEl);
+    const costoTotalCombo = costoProductosCombo + comboEmpaqueVal;
+    const comboMargenPct = num(comboMargenEl);
+    const precioCombo = costoTotalCombo * (1 + comboMargenPct/100);
+    const gananciaCombo = precioCombo - costoTotalCombo;
+    const precioComboRedondeado = Math.round(precioCombo * 10) / 10;
+
+    document.getElementById('comboSubtotalProductos').textContent = money(costoProductosCombo);
+    document.getElementById('precioCombo').textContent = money(precioCombo);
+    document.getElementById('precioComboRedondeado').textContent = money(precioComboRedondeado);
+    document.getElementById('costoTotalCombo').textContent = money(costoTotalCombo);
+    document.getElementById('gananciaCombo').textContent = money(gananciaCombo);
+
+    const margenRealCombo = precioCombo > 0 ? (gananciaCombo / precioCombo) * 100 : 0;
+    const margenMinimoCombo = num(margenMinimoEl);
+    const avisoMargenBajoCombo = document.getElementById('avisoMargenBajoCombo');
+    if (margenMinimoCombo > 0 && costoProductosCombo > 0 && margenRealCombo < margenMinimoCombo) {
+      avisoMargenBajoCombo.style.display = 'flex';
+    } else {
+      avisoMargenBajoCombo.style.display = 'none';
+    }
+
+    const ahorroResult = document.getElementById('ahorroComboResult');
+    const ahorroBadge = document.getElementById('ahorroBadge');
+    const ahorroTexto = document.getElementById('ahorroTexto');
+    const itemsConCosto = comboItems.filter(item => item.costo > 0);
+    if (itemsConCosto.length === 0) {
+      ahorroResult.style.display = 'none';
+      return;
+    }
+    const usaVentaManual = itemsConCosto.some(item => item.precioVenta > 0);
+    const sumaIndividual = itemsConCosto.reduce((sum, item) => {
+      if (item.precioVenta > 0) return sum + item.precioVenta;
+      const precioIndividual = item.costo * (1 + margenPrincipalPct/100);
+      return sum + (Math.round(precioIndividual * 10) / 10);
+    }, 0);
+    const ahorro = sumaIndividual - precioComboRedondeado;
+    const fuente = usaVentaManual
+      ? 'usando el precio de venta que pusiste en cada producto (o tu margen de ' + margenPrincipalPct.toLocaleString('es-PE') + '% donde no lo escribiste)'
+      : 'con tu margen de ' + margenPrincipalPct.toLocaleString('es-PE') + '%';
+    ahorroResult.style.display = 'flex';
+    if (ahorro > 0.05) {
+      ahorroBadge.className = 'badge ahorro';
+      ahorroBadge.textContent = '↓';
+      ahorroTexto.innerHTML = '<strong>El cliente ahorra ' + money(ahorro) + '</strong>Comprando el combo (' + money(precioComboRedondeado) + ') en vez de los productos por separado (' + money(sumaIndividual) + ', ' + fuente + ').';
+    } else if (ahorro < -0.05) {
+      ahorroBadge.className = 'badge perdida';
+      ahorroBadge.textContent = '↑';
+      ahorroTexto.innerHTML = '<strong>El combo sale ' + money(Math.abs(ahorro)) + ' más caro</strong>que comprar los productos por separado. Quizás quieras bajar el margen del combo.';
+    } else {
+      ahorroBadge.className = 'badge igual';
+      ahorroBadge.textContent = '=';
+      ahorroTexto.innerHTML = '<strong>Mismo precio</strong>El combo cuesta igual que comprar los productos por separado — sin ahorro real para el cliente.';
+    }
+  }
+
+  // Plantillas de combos
+  const PLANTILLAS_KEY = 'salynPlantillasCombos';
+  const plantillasListEl = document.getElementById('plantillasList');
+  const plantillaNombreEl = document.getElementById('plantillaNombre');
+  function cargarPlantillas(){
+    try {
+      const data = JSON.parse(localStorage.getItem(PLANTILLAS_KEY));
+      return Array.isArray(data) ? data : [];
+    } catch (e) { return []; }
+  }
+  function guardarPlantillasLS(lista){
+    try { localStorage.setItem(PLANTILLAS_KEY, JSON.stringify(lista)); } catch (e) {}
+  }
+  let plantillas = cargarPlantillas();
+
+  function renderPlantillas(){
+    if (plantillas.length === 0) {
+      plantillasListEl.innerHTML = '<div class="historial-empty">Aún no guardas plantillas de combos.</div>';
+      return;
+    }
+    plantillasListEl.innerHTML = plantillas.map((pl, i) =>
+      '<div class="plantilla-item">' +
+        '<div class="info">' +
+          '<span class="nombre">' + escapeHtml(pl.nombre) + '</span>' +
+          '<span class="detalle">' + pl.items.length + ' producto' + (pl.items.length === 1 ? '' : 's') + ' · margen ' + pl.margen + '%</span>' +
+        '</div>' +
+        '<div class="acciones">' +
+          '<button type="button" class="usar-btn" data-idx="' + i + '">Usar</button>' +
+          '<button type="button" class="borrar-btn" data-idx="' + i + '" title="Eliminar">×</button>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  document.getElementById('guardarPlantillaBtn').addEventListener('click', () => {
+    const nombre = plantillaNombreEl.value.trim();
+    if (!nombre || comboItems.length === 0) return;
+    plantillas.push({
+      nombre,
+      items: comboItems.map(item => ({ nombre: item.nombre, costo: item.costo, precioVenta: item.precioVenta || 0 })),
+      empaque: num(comboEmpaqueEl),
+      margen: num(comboMargenEl)
+    });
+    guardarPlantillasLS(plantillas);
+    plantillaNombreEl.value = '';
+    renderPlantillas();
+  });
+
+  plantillasListEl.addEventListener('click', (e) => {
+    const usarBtn = e.target.closest('.usar-btn');
+    const borrarBtn = e.target.closest('.borrar-btn');
+    if (usarBtn) {
+      const idx = parseInt(usarBtn.dataset.idx, 10);
+      const pl = plantillas[idx];
+      if (!pl) return;
+      comboItems = pl.items.map(item => ({ nombre: item.nombre, costo: item.costo, precioVenta: item.precioVenta || 0 }));
+      comboEmpaqueEl.value = pl.empaque || 0;
+      comboMargenEl.value = pl.margen || 0;
+      renderComboItems();
+      marcarComboPresetActivo();
+      calcular();
+      window.scrollTo({ top: document.getElementById('tabCombo').offsetTop - 80, behavior: 'smooth' });
+    } else if (borrarBtn) {
+      const idx = parseInt(borrarBtn.dataset.idx, 10);
+      plantillas.splice(idx, 1);
+      guardarPlantillasLS(plantillas);
+      renderPlantillas();
+    }
+  });
+
+  // Pestañas
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
   renderProductos();
+  renderHistorial();
+  renderComboSelectOptions();
+  renderComboItems();
+  renderPlantillas();
   marcarMargenPresetActivo();
   marcarEmpaquePresetActivo();
+  marcarComboPresetActivo();
   calcular();
 
   // Registrar el service worker para que funcione sin internet
